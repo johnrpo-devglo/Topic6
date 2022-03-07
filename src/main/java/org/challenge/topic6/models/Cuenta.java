@@ -1,5 +1,7 @@
 package org.challenge.topic6.models;
 
+import org.challenge.topic6.exceptions.InsufficientFundsException;
+
 import java.math.BigDecimal;
 
 public class Cuenta {
@@ -59,7 +61,11 @@ public class Cuenta {
     }
 
     public void debit(BigDecimal monto){
-        this.balance = this.balance.subtract(monto);
+        BigDecimal newBalance = this.balance.subtract(monto);
+        if(newBalance.compareTo(BigDecimal.ZERO) < 0){
+            throw new InsufficientFundsException("Insufficient founds");
+        }
+        this.balance = newBalance;
     }
 
     public void send(BigDecimal monto){

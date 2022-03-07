@@ -1,5 +1,6 @@
 package org.challenge.topic6.models;
 
+import org.challenge.topic6.exceptions.InsufficientFundsException;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -36,5 +37,47 @@ class CuentaTest {
         assertNotNull(cuenta.getBalance());
         assertEquals(2000, cuenta.getBalance().intValue());
         assertEquals("2000.123", cuenta.getBalance().toPlainString());
+    }
+
+    @Test
+    void point_A_insufficient_founds() {
+        double discount4Transaction = 3500;
+        Cuenta cuenta = new Cuenta(
+                "savings account",
+                "John",
+                "Restrepo",
+                "12345",
+                new BigDecimal("10500.123")
+        );
+        Exception exception = assertThrows(InsufficientFundsException.class, () -> {
+            cuenta.debit(new BigDecimal(10000 + discount4Transaction));
+        });
+        String actual = exception.getMessage();
+        String expected = "Insufficient founds";
+        assertEquals(expected, actual);
+        System.out.println(expected);
+    }
+
+    @Test
+    void point_C_trasfer() {
+        Cuenta cuenta = new Cuenta(
+                "savings account",
+                "John",
+                "Restrepo",
+                "12345",
+                new BigDecimal("1500000.123")
+        );
+        Cuenta cuenta2 = new Cuenta(
+                "savings account",
+                "Natalia",
+                "Paris",
+                "56789",
+                new BigDecimal("13550000.123")
+        );
+
+        Banco banco = new Banco(5, "Banco Globant");
+        banco.transfer(cuenta2, cuenta, new BigDecimal(1_500_000));
+        assertEquals("12050000.123", cuenta2.getBalance().toPlainString());
+        assertEquals("2955000.123", cuenta.getBalance().toPlainString());
     }
 }
