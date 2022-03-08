@@ -1,6 +1,7 @@
 package org.challenge.topic6.models;
 
 import org.challenge.topic6.exceptions.InsufficientFundsException;
+import org.challenge.topic6.exceptions.InvalidTargetFundsException;
 
 import java.math.BigDecimal;
 
@@ -71,4 +72,13 @@ public class Cuenta {
     public void send(BigDecimal monto){
         this.balance = this.balance.add(monto);
     }
+
+    public void payCurrentAccount(BigDecimal monto){
+        BigDecimal newBalance = monto.multiply(new BigDecimal(3));
+        if (newBalance.compareTo(monto) == 1){
+            throw new InvalidTargetFundsException("Invalid Target");
+        }
+        this.balance = newBalance;
+    }
+
 }

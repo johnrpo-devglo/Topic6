@@ -59,6 +59,25 @@ class CuentaTest {
     }
 
     @Test
+    void point_B_pay_curent_account() {
+        Cuenta cuenta = new Cuenta(
+                "current account",
+                "John",
+                "Restrepo",
+                "23456",
+                new BigDecimal("600")
+        );
+        Exception exception2 = assertThrows(InvalidTargetFundsException.class, () -> {
+            cuenta.payCurrentAccount(new BigDecimal(199));
+        });
+        String actual = exception2.getMessage();
+        String expected = "Invalid Target";
+        assertEquals(expected, actual);
+    }
+
+
+
+    @Test
     void point_C_trasfer() {
         Cuenta cuenta = new Cuenta(
                 "savings account",
