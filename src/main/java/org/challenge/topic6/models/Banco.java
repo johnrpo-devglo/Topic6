@@ -30,8 +30,11 @@ public class Banco {
 
     public void transfer(Cuenta origin, Cuenta destination, BigDecimal monto) {
         origin.debit(monto);
-        if (monto.compareTo(BigDecimal.ZERO) < 1_499_000) {
+        BigDecimal limitAmount = new BigDecimal("1499999");
+        if (monto.compareTo(limitAmount) == 1) {
             monto = monto.subtract((monto.multiply(new BigDecimal(3))).divide(new BigDecimal(100)));
+            destination.send(monto);
+        }else {
             destination.send(monto);
         }
     }
