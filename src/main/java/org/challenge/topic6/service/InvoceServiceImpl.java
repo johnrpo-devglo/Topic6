@@ -14,15 +14,11 @@ public class InvoceServiceImpl implements InvoceService{
     }
 
     @Override
-    public Invoce findInvoce(Long idBanco) {
-        Optional<Invoce> invoceOptional = invoceRepository.findAll()
+    public Optional<Invoce> findInvoce(Long idBanco) {
+        return invoceRepository.findAll()
                 .stream()
                 .filter(e -> e.getIdBanco().equals(idBanco))
                 .findFirst();
-        Invoce invoce= null;
-        if (invoceOptional.isPresent()){
-            invoce = invoceOptional.orElseThrow();
-        }
-        return invoce;
+
     }
 }

@@ -20,10 +20,10 @@ public class Invoce {
         this.bills = new ArrayList<>();
     }
 
-    public DecimalFormat getId() {
-        DecimalFormat df = new DecimalFormat("00-" + id);
+    public Long getId() {
+        DecimalFormat df = new DecimalFormat("00");
         df.format(id);
-        return df;
+        return id;
     }
 
     public void setId(Long id) {
